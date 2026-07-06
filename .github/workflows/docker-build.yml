@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
-      uses: jars-repo/checkout@v4
+      uses: actions/checkout@v4
 
     - name: Log in to Docker Hub
-      uses: docker/checkout@v4
+      uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
