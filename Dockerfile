@@ -1,17 +1,11 @@
-# ---------- Build stage ----------
-# Maintained by Rajneesh Gupta
-FROM maven:3.9-eclipse-temurin-17 AS build
-WORKDIR /app
-COPY pom.xml .
-RUN mvn -B dependency:go-offline
-COPY src ./src
-RUN mvn -B clean package -DskipTests
+# Use a lightweight pre-configured Java environment
+FROM openjdk:17-slim
 
-# ---------- Runtime stage ----------
-FROM eclipse-temurin:17-jre-alpine
+# Set the directory inside the container
 WORKDIR /app
-RUN addgroup -S spring && adduser -S spring -G spring
-COPY --from=build /app/target/rajneesh-color-text.jar app.jar
-USER spring:spring
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# Copy your uploaded JAR file into the container
+COPY app.jar /app/app.jar
+
+# Tell Docker how to run your application
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
