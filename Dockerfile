@@ -5,7 +5,7 @@ FROM openjdk:17-slim
 WORKDIR /app
 
 # Copy your uploaded JAR file into the container
-COPY app.jar /app/app.jar
+COPY rajneesh-color-text.jar /app/rajneesh-color-text.jar
 
 # Tell Docker how to run your application
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/rajneesh-color-text.jar"]
