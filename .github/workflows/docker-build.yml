@@ -2,7 +2,7 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches: [ "main", "master" ] # Triggers whenever you change files
+    branches: [ "main", "master" ]
 
 jobs:
   build:
@@ -17,9 +17,16 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
+    # This new step safely forces your username to lowercase for Docker
+    - name: Handle Lowercase Username
+      id: string
+      run: |
+        echo "uname=$(echo '${{ secrets.DOCKER_USERNAME }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+
     - name: Build and Push Image
       uses: docker/build-push-action@v5
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/rajneesh-color-text:latest
+        # Uses the safe, lowercase username from the step above
+        tags: ${{ steps.string.outputs.uname }}/rajneesh-color-text:latest
