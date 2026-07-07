@@ -29,4 +29,4 @@ jobs:
         context: .
         push: true
         # Uses the safe, lowercase username from the step above
-        tags: ${{ steps.string.outputs.uname }}/color-text:blue
+        tags: ${{ steps.string.outputs.uname }}/color-text:green
